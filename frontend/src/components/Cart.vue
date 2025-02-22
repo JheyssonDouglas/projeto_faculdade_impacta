@@ -1,14 +1,14 @@
 <template>
   <div class="cart">
-    <h1>Carrinho</h1>
+    <h1>Carrinho de Compras</h1>
     <ul>
       <li v-for="item in cart" :key="item.product.id">
-        {{ item.product.name }} - R$ {{ item.product.price.toFixed(2) }} x {{ item.quantity }}
-        <p>Subtotal: R$ {{ (item.product.price * item.quantity).toFixed(2) }}</p>
+        {{ item.product.name }} - R$ {{ formatPrice(item.product.price) }} x {{ item.quantity }}
       </li>
     </ul>
-    <p>Total: R$ {{ total.toFixed(2) }}</p>
-    <button @click="goToPayment">Ir para Pagamento</button>
+    <p>Total: R$ {{ formatPrice(total) }}</p>
+    <button @click="goToCheckout">Ir para Pagamento</button>
+    <button @click="goBack">Voltar</button>
   </div>
 </template>
 
@@ -17,31 +17,35 @@ export default {
   name: 'Cart',
   data() {
     return {
-      cart: [],
+      cart: JSON.parse(localStorage.getItem('cart')) || [],
     };
   },
   computed: {
     total() {
-      return this.cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
-    },
-  },
-  created() {
-    this.loadCart();
+      return this.cart.reduce((sum, item) => sum + (Number(item.product.price) * item.quantity || 0), 0);
+    }
   },
   methods: {
-    loadCart() {
-      const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
-      this.cart = savedCart;
+    formatPrice(price) {
+      const numericPrice = Number(price);
+      return isNaN(numericPrice) ? '0.00' : numericPrice.toFixed(2);
     },
-    goToPayment() {
-      alert('Indo para a tela de pagamento...');
+    goToCheckout() {
+      // Lógica para ir para a página de pagamento (checkout)
+      console.log('Ir para pagamento');
     },
-  },
+    goBack() {
+      this.$router.push('/products');
+    }
+  }
 };
 </script>
 
 <style scoped>
 .cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
 }
 
@@ -55,8 +59,8 @@ li {
 }
 
 button {
-  margin-top: 20px;
-  padding: 10px 20px;
+  margin-top: 10px;
+  padding: 5px 10px;
   cursor: pointer;
 }
 </style>
