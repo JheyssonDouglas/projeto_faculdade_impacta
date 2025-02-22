@@ -1,17 +1,6 @@
 <template>
   <div id="app">
-    <nav>
-      <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/dishes">Pratos</router-link></li>
-        <li><router-link to="/employees">Funcionários</router-link></li>
-        <li><router-link to="/orders">Pedidos</router-link></li>
-        <li><router-link to="/reservations">Reservas</router-link></li>
-        <li><router-link to="/restaurants">Restaurantes</router-link></li>
-        <li><router-link to="/stocks">Estoque</router-link></li>
-      </ul>
-    </nav>
-    <router-view></router-view>
+    <router-view></router-view> <!-- Ponto de montagem para as rotas -->
   </div>
 </template>
 
@@ -22,13 +11,12 @@ export default {
 </script>
 
 <style>
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin-right: 10px;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
