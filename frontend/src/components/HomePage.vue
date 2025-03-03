@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <h1>Bem-vindo à nossa loja</h1>
-    <p>Explore nossos produtos clicando no botão abaixo.</p>
+    <img src="@/assets/Impacta.png" alt="Impacta Logo" />
+    <h1>Bem-vindo à Impacta Food</h1>
+    
     <button @click="goToProducts">Ver Produtos</button>
   </div>
 </template>
@@ -25,6 +26,11 @@ export default {
   justify-content: center;
   height: 100vh;
   text-align: center;
+}
+
+img {
+  margin-top: 20px;
+  width: 450px;
 }
 
 button {

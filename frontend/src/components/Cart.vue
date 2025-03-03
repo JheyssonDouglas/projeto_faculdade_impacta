@@ -7,7 +7,8 @@
       </li>
     </ul>
     <p>Total: R$ {{ formatPrice(total) }}</p>
-    <button @click="goToCheckout">Ir para Pagamento</button>
+    <button @click="goToPayment" class="go-to-payment-button">Ir para Pagamento</button>
+    <button @click="clearCart" class="clear-cart-button">Limpar Carrinho</button>
     <button @click="goBack">Voltar</button>
   </div>
 </template>
@@ -30,9 +31,17 @@ export default {
       const numericPrice = Number(price);
       return isNaN(numericPrice) ? '0.00' : numericPrice.toFixed(2);
     },
-    goToCheckout() {
-      // Lógica para ir para a página de pagamento (checkout)
-      console.log('Ir para pagamento');
+    goToPayment() {
+      localStorage.setItem('cart', JSON.stringify(this.cart));
+      localStorage.setItem('total', JSON.stringify(this.total));
+      this.$router.push('/payment');
+    },
+    clearCart() {
+      this.cart = []; // Esvazia o array do carrinho
+      this.saveCart(); // Salva no localStorage para atualizar
+    },
+    saveCart() {
+      localStorage.setItem('cart', JSON.stringify(this.cart)); // Certifique-se de que saveCart está aqui
     },
     goBack() {
       this.$router.push('/products');
@@ -62,5 +71,45 @@ button {
   margin-top: 10px;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+.go-to-payment-button {
+  margin-top: 10px;
+  padding: 12px 20px;
+  background-color: #007bff; /* Azul padrão */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 25%;
+}
+
+.go-to-payment-button:hover {
+  background-color: #0056b3; /* Azul mais escuro no hover */
+  transform: scale(1.05); /* Efeito de leve aumento ao passar o mouse */
+}
+
+.go-to-payment-button:active {
+  background-color: #004494; /* Azul ainda mais escuro ao clicar */
+  transform: scale(0.98); /* Pequena redução ao pressionar */
+}
+
+.clear-cart-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #ff4d4d; /* Vermelho para indicar remoção */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 20%;
+}
+
+.clear-cart-button:hover {
+  background-color: #cc0000; /* Vermelho mais escuro no hover */
 }
 </style>

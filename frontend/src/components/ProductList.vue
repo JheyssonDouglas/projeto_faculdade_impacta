@@ -8,7 +8,8 @@
         </li>
       </ul>
       <p>Total: R$ {{ formatPrice(total) }}</p>
-      <button @click="goToCart">Ir para Pagamento</button>
+      <button @click="goToCart" class="go-to-payment-button">Ir para Pagamento</button>
+      <button @click="clearCart" class="clear-cart-button">Limpar Carrinho</button>
     </div>
     <div class="products-section">
       <h1>Produtos</h1>
@@ -23,7 +24,7 @@
             <span>{{ getQuantity(product) }}</span>
             <button @click="increaseQuantity(product)">+</button>
           </div>
-          <button @click="addToCart(product)">Adicionar</button>
+          <button @click="addToCart(product)" class="add-to-cart-button">Adicionar</button>
         </div>
       </div>
       <div class="pagination">
@@ -112,6 +113,10 @@ export default {
     goToCart() {
       this.$router.push('/cart');
     },
+    clearCart() {
+      this.cart = []; // Esvazia o array do carrinho
+      this.saveCart(); // Salva no localStorage para atualizar
+    },
     getImageUrl(imagePath) {
       return imagePath.startsWith('http') ? imagePath : `http://localhost:8000${imagePath}`;
     },
@@ -149,9 +154,15 @@ export default {
 
 .cart-summary {
   width: 300px;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #d1d1d1; /* Mudando para um cinza mais escuro */
   padding-right: 20px;
   margin-right: 20px;
+  background-color: #f8f9fa; /* Adicionando um fundo mais suave */
+  padding: 15px;
+  border-radius: 8px; /* Bordas arredondadas */
+  position: sticky;
+  top: 159px; /* Ajuste a distância do topo */
+  height: fit-content;
 }
 
 .products-section {
@@ -160,9 +171,49 @@ export default {
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   width: 100%;
+}
+
+.go-to-payment-button {
+  margin-top: 10px;
+  padding: 12px 20px;
+  background-color: #007bff; /* Azul padrão */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100%;
+}
+
+.go-to-payment-button:hover {
+  background-color: #0056b3; /* Azul mais escuro no hover */
+  transform: scale(1.05); /* Efeito de leve aumento ao passar o mouse */
+}
+
+.go-to-payment-button:active {
+  background-color: #004494; /* Azul ainda mais escuro ao clicar */
+  transform: scale(0.98); /* Pequena redução ao pressionar */
+}
+
+.clear-cart-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #ff4d4d; /* Vermelho para indicar remoção */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.clear-cart-button:hover {
+  background-color: #cc0000; /* Vermelho mais escuro no hover */
 }
 
 .product-item {
@@ -170,9 +221,18 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: 1px solid #ccc;
+  border: 1px solid #ebf1f1;
   padding: 10px;
   border-radius: 5px;
+  height: 100%;
+}
+
+.product-item p:nth-of-type(2) {
+  font-size: 25px; /* Ajuste o tamanho da fonte */
+  font-weight: bold; /* Deixe o preço em negrito */
+  color: #0976f3; /* Cor personalizada */
+  margin: 5px 0;
+  margin-top: auto;
 }
 
 .product-image {
@@ -184,13 +244,31 @@ export default {
 .quantity-controls {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  justify-content: center;
+  margin-top: auto; /* Garante que fique no final antes do botão */
+  width: 100%;
 }
 
 .quantity-controls button {
   margin: 0 5px;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+.add-to-cart-button {
+  margin-top: auto;
+  padding: 10px 20px;
+  background-color: #0063f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 50%;
+}
+
+.add-to-cart-button:hover {
+  background-color: #000a61;
 }
 
 .pagination {
