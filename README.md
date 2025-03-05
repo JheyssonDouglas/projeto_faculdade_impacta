@@ -36,6 +36,10 @@ O back-end foi desenvolvido utilizando Django e Django REST Framework. A seguir 
 
 - **`/api/products/`** - Endpoint para listar, criar, atualizar e deletar produtos.
 
+### Banco de dados
+
+O banco de dados utilizado foi o MySQL
+
 ## Como Rodar o Projeto
 
 ### Pré-requisitos
@@ -89,3 +93,34 @@ O back-end foi desenvolvido utilizando Django e Django REST Framework. A seguir 
    python manage.py runserver
    ```
 
+### Rodando o Banco de dados
+
+1. Acessando o banco:
+   ```sh
+   mysql -u root -p
+   ```
+
+3. senha:
+   ```sh
+   banco123
+   ```
+
+5. Mostrando os databases:
+   ```sh
+   show databases;
+   ```
+
+7. Escolhendo o database correto:
+   ```sh
+   use projeto_faculdade_impacta;
+   ```
+
+9. Mostrando as tabelas:
+   ```sh
+    show tables;
+   ```
+
+11. Selecionando o projeto;
+    ```sh
+    select * from restaurente_product;
+    ```
