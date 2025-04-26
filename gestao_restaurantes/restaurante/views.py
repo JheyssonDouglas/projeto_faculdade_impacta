@@ -58,67 +58,56 @@ def login_user(request):
 @permission_classes([AllowAny])
 def user_cart(request):
     user = request.user if request.user.is_authenticated else None
-    
+
     if request.method == 'GET':
-        # Verifica se existe um carrinho ativo para o usuário
-        if user:
-            cart_items = CartItem.objects.filter(user=user, is_active=True)
-        else:
-            cart_items = CartItem.objects.filter(user=None, is_active=True)
-        
+        # Recupera os itens do carrinho para o usuário autenticado
+        cart_items = CartItem.objects.filter(user=user, is_active=True)
         if not cart_items.exists():
             return Response({
                 'success': False,
                 'message': 'Carrinho vazio. Você deseja continuar com sua compra anterior ou iniciar um novo carrinho?'
             }, status=status.HTTP_200_OK)
-        
+
         serializer = CartItemSerializer(cart_items, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-    # Log para verificar os dados recebidos
         print(f"Dados recebidos no POST: {request.data}")
 
-        # Verifica se os dados estão no formato de uma lista de itens
+        # Verifica se os dados estão no formato correto
         items = request.data.get('items', None)
         if items is None:
-            # Se não for uma lista, tenta tratar como um único item
             single_item = request.data
             if 'product' in single_item and 'quantity' in single_item:
-                items = [single_item]  # Converte para uma lista com um único item
+                items = [single_item]
             else:
                 return Response({'success': False, 'message': 'Formato inválido ou nenhum item fornecido.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Processa os itens
         for item in items:
             if not isinstance(item, dict) or 'product' not in item or 'quantity' not in item:
                 return Response({'success': False, 'message': 'Dados do item inválidos.'}, status=status.HTTP_400_BAD_REQUEST)
-            
+
             try:
                 product_id = int(item['product'])
                 quantity = int(item['quantity'])
             except ValueError:
                 return Response({'success': False, 'message': 'ID do produto e quantidade devem ser números inteiros.'}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Verifica se o usuário está autenticado
-            user = request.user if request.user.is_authenticated else None
-
-            # Cria o item no carrinho
-            CartItem.objects.create(
-                user=user,  # Associa ao usuário autenticado ou deixa como None
+            # Verifica se o item já existe no carrinho
+            cart_item, created = CartItem.objects.get_or_create(
+                user=user,
                 product_id=product_id,
-                quantity=quantity,
-                is_active=True
+                is_active=True,
+                defaults={'quantity': quantity}
             )
-        
+            if not created:
+                # Atualiza a quantidade se o item já existir
+                cart_item.quantity += quantity
+                cart_item.save()
+
         return Response({'success': True, 'message': 'Itens adicionados ao carrinho com sucesso!'}, status=status.HTTP_201_CREATED)
-    
+
     elif request.method == 'DELETE':
-        # Limpa o carrinho
-        if user:
-            CartItem.objects.filter(user=user, is_active=True).delete()
-        else:
-            CartItem.objects.filter(user=None, is_active=True).delete()
-        
-        # Retorna uma resposta após a exclusão
+        # Limpa o carrinho para o usuário autenticado
+        CartItem.objects.filter(user=user, is_active=True).delete()
         return Response({'success': True, 'message': 'Carrinho limpo com sucesso!'}, status=status.HTTP_204_NO_CONTENT)

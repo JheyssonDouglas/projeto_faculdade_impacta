@@ -136,6 +136,7 @@ export default {
       }
     },
     async saveCartToBackend() {
+      try {
       await axios.delete('/cart/'); // limpa carrinho antigo
       for (const item of this.cart) {
         await axios.post('/cart/', {
@@ -143,7 +144,10 @@ export default {
           quantity: item.quantity,
     });
   }
-},
+} catch (error) {
+        console.error("Erro ao salvar o carrinho no backend:", error);
+      }
+    },
     logout() {
       localStorage.removeItem('cart'); // Limpa o carrinho do localStorage
       this.cart = []; // Limpa o carrinho da memória
