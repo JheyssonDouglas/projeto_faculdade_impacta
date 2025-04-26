@@ -10,6 +10,7 @@
       <p>Total: R$ {{ formatPrice(total) }}</p>
       <button @click="goToCart" class="go-to-payment-button">Ir para Pagamento</button>
       <button @click="clearCart" class="clear-cart-button">Limpar Carrinho</button>
+      <button @click="logout" class="logout-button">Sair</button>
     </div>
     <div class="products-section">
       <h1>Produtos</h1>
@@ -133,6 +134,14 @@ export default {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
       }
+    },
+    saveCartToBackend() {
+      axios.post('/cart/', { items: this.cart });
+    },
+    logout() {
+      localStorage.removeItem('cart'); // Limpa o carrinho do localStorage
+      this.cart = []; // Limpa o carrinho da memória
+      this.$router.push('/');
     }
   },
   watch: {
@@ -140,6 +149,7 @@ export default {
       deep: true,
       handler() {
         this.saveCart();
+        this.saveCartToBackend();
       }
     }
   }
@@ -286,5 +296,21 @@ export default {
 
 .pagination span {
   margin: 0 10px;
+}
+
+.logout-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #6c757d; /* Cinza neutro */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.logout-button:hover {
+  background-color: #5a6268; /* Cinza mais escuro */
 }
 </style>

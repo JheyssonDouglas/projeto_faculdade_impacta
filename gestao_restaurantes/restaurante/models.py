@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.conf import settings
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
@@ -40,6 +41,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 class CustomUser(AbstractBaseUser):
+    id = models.BigAutoField(primary_key=True)
     email = models.EmailField(unique=True)
     nome = models.CharField(max_length=50)
     password = models.CharField(max_length=128)
@@ -54,3 +56,15 @@ class CustomUser(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+    
+class CartItem(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='cart_items', null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    is_active = models.BooleanField(default=True)  # Indica se o item está ativo no carrinho
+
+    class Meta:
+        unique_together = ('user', 'product')
+
+    def __str__(self):
+        return f"{self.quantity}x {self.product.name} ({self.user.email if self.user else 'Anônimo'})"

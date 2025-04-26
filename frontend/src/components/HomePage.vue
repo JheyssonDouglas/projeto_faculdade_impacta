@@ -40,13 +40,28 @@ export default {
         nome: '',
         email: '',
         password: ''
-      }
+      },
+      showCartChoiceModal: false,
+      lastCart: [],
     };
   },
   methods: {
     toggleAuth() {
       this.isLogin = !this.isLogin;
     },
+    checkPreviousCart() {
+    axios.get('/cart/')
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          this.lastCart = res.data;
+          this.showCartChoiceModal = true;
+        }
+      });
+  },
+  continueLastCart() {
+    localStorage.setItem('cart', JSON.stringify(this.lastCart));
+    this.$router.push('/produtos');
+  },
     async login() {
       try {
         const response = await axios.post('http://localhost:8000/api/login/', this.loginData);

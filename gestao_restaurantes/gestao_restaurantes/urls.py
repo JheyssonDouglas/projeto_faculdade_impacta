@@ -9,7 +9,7 @@ def redirect_to_products(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('restaurante.urls')),
+    path('api/', include('restaurante.urls')),  # Inclui as URLs do app restaurante
     path('', redirect_to_products),  # Redireciona a raiz para /api/products/
 ]
 
