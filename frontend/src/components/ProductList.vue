@@ -135,9 +135,15 @@ export default {
         this.currentPage++;
       }
     },
-    saveCartToBackend() {
-      axios.post('/cart/', { items: this.cart });
-    },
+    async saveCartToBackend() {
+      await axios.delete('/cart/'); // limpa carrinho antigo
+      for (const item of this.cart) {
+        await axios.post('/cart/', {
+          product: item.product.id,
+          quantity: item.quantity,
+    });
+  }
+},
     logout() {
       localStorage.removeItem('cart'); // Limpa o carrinho do localStorage
       this.cart = []; // Limpa o carrinho da memória

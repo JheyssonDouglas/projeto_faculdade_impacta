@@ -58,13 +58,10 @@ class CustomUser(AbstractBaseUser):
         return self.email
     
 class CartItem(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='cart_items', null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='cart_items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    is_active = models.BooleanField(default=True)  # Indica se o item está ativo no carrinho
-
-    class Meta:
-        unique_together = ('user', 'product')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.quantity}x {self.product.name} ({self.user.email if self.user else 'Anônimo'})"
+        return f"{self.quantity}x {self.product.name} ({self.user.email})"

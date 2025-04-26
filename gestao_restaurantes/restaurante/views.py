@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
 from django.contrib.auth import get_user_model, authenticate, login
@@ -9,6 +9,16 @@ from rest_framework.decorators import permission_classes
 from rest_framework.authtoken.models import Token
 
 User = get_user_model()
+
+class CartItemViewSet(viewsets.ModelViewSet):
+    serializer_class = CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return CartItem.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 @permission_classes([AllowAny])
 class ProductViewSet(viewsets.ModelViewSet):

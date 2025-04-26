@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'nome', 'email', 'password')
-        extra_kwargs = {'password': {'write_only': True, 'required': False}}
+        extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data['password'])
@@ -27,11 +27,9 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
-
     class Meta:
         model = CartItem
-        fields = ['product', 'quantity']
+        fields = ['id', 'product', 'quantity', 'user']
 
 class CartItemCreateSerializer(serializers.ModelSerializer):
     class Meta:

@@ -22,6 +22,14 @@
       </div>
     </div>
   </div>
+  <div v-if="showCartChoiceModal" class="modal">
+  <div class="modal-content">
+    <h2>Você tem um carrinho salvo</h2>
+    <p>Deseja continuar de onde parou?</p>
+    <button @click="continueLastCart">Continuar compra</button>
+    <button @click="startNewCart">Iniciar nova compra</button>
+  </div>
+</div>
 </template>
 
 <script>
@@ -46,50 +54,80 @@ export default {
     };
   },
   methods: {
-    toggleAuth() {
-      this.isLogin = !this.isLogin;
-    },
-    checkPreviousCart() {
+  toggleAuth() {
+    this.isLogin = !this.isLogin;
+  },
+  checkPreviousCart() {
     axios.get('/cart/')
       .then(res => {
         if (res.data && res.data.length > 0) {
           this.lastCart = res.data;
           this.showCartChoiceModal = true;
+        } else {
+          this.$router.push('/products');
         }
+      })
+      .catch(err => {
+        console.error('Erro ao buscar carrinho:', err);
+        this.$router.push('/products');
       });
+  },
+  startNewCart() {
+    localStorage.removeItem('cart'); // apaga o carrinho anterior
+    this.$router.push('/products'); // vai para a lista de produtos
   },
   continueLastCart() {
     localStorage.setItem('cart', JSON.stringify(this.lastCart));
-    this.$router.push('/produtos');
+    this.$router.push('/products');
   },
-    async login() {
-      try {
-        const response = await axios.post('http://localhost:8000/api/login/', this.loginData);
-        if (response.data.success) {
-          this.$router.push('/products');
-        } else {
-          alert('Email ou senha incorretos.');
-        }
-      } catch (error) {
-        alert('Erro ao fazer login. Tente novamente.');
+  async login() {
+  try {
+    const response = await axios.post('http://localhost:8000/api/login/', this.loginData);
+    if (response.data.success) {
+      // Agora você está logado.
+      // Primeiro, armazena o token (se precisar).
+      
+      // Agora verifica se tem carrinho salvo
+      await this.checkPreviousCart();
+      
+      if (this.lastCart.length > 0) {
+        // Se tiver carrinho anterior, abre modal perguntando o que fazer
+        this.showCartChoiceModal = true;
+      } else {
+        // Se não tiver carrinho, vai direto para os produtos
+        this.$router.push('/products');
       }
-    },
-    async register() {
-      try {
-        const response = await axios.post('http://localhost:8000/api/register/', this.registerData);
-        if (response.data.success) {
-          alert('Cadastro realizado com sucesso! Faça login.');
-          this.isLogin = true;
-        } else {
-          alert('Erro ao cadastrar. Verifique os dados.');
-        }
-      } catch (error) {
-        alert('Erro ao cadastrar. Tente novamente.');
+      
+    } else {
+      alert('Email ou senha incorretos.');
+    }
+  } catch (error) {
+    alert('Erro ao fazer login. Tente novamente.');
+  }
+},
+  async register() {
+    if (!this.registerData.nome || !this.registerData.email || !this.registerData.password) {
+      alert('Por favor, preencha todos os campos!');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/register/', this.registerData);
+      if (response.data.success) {
+        alert('Cadastro realizado com sucesso! Faça login.');
+        this.isLogin = true;
+      } else {
+        alert('Erro ao cadastrar. Verifique os dados.');
       }
+    } catch (error) {
+      console.error('Erro ao registrar:', error.response?.data || error);
+      alert('Erro ao cadastrar. Verifique os campos e tente novamente.');
     }
   }
+},
 };
 </script>
+
 
 <style scoped>
 .home {
@@ -134,5 +172,29 @@ span {
   color: blue;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
 }
 </style>
