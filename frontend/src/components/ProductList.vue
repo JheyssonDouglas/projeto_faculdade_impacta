@@ -14,6 +14,23 @@
     </div>
     <div class="products-section">
       <h1>Produtos</h1>
+      <div class="filters">
+        <label for="category">Categoria:</label>
+        <select id="category" v-model="selectedCategory" @change="filterProducts">
+          <option value="">Todas</option>
+          <option v-for="category in categories" :key="category" :value="category">
+            {{ category }}
+          </option>
+        </select>
+
+        <label for="subcategory">Subcategoria:</label>
+        <select id="subcategory" v-model="selectedSubcategory" @change="filterProducts">
+          <option value="">Todas</option>
+          <option v-for="subcategory in subcategories" :key="subcategory" :value="subcategory">
+            {{ subcategory }}
+          </option>
+        </select>
+      </div>
       <div class="products-grid">
         <div v-for="product in paginatedProducts" :key="product.id" class="product-item">
           <img :src="getImageUrl(product.image)" alt="product image" v-if="product.image" class="product-image"/>
@@ -48,6 +65,11 @@ export default {
       cart: JSON.parse(localStorage.getItem('cart')) || [],
       currentPage: 1,
       itemsPerPage: 20,
+      selectedCategory: '', // Categoria selecionada
+      selectedSubcategory: '', // Subcategoria selecionada
+      categories: [], // Lista de categorias
+      subcategories: [], // Lista de subcategorias
+      filteredProducts: [] // Produtos filtrados
     };
   },
   computed: {
@@ -57,10 +79,10 @@ export default {
     paginatedProducts() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.products.slice(start, end);
+      return this.filteredProducts.slice(start, end);
     },
     totalPages() {
-      return Math.ceil(this.products.length / this.itemsPerPage);
+      return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
     }
   },
   created() {
@@ -71,10 +93,28 @@ export default {
       axios.get('/products/')
         .then(response => {
           this.products = response.data;
+          this.filteredProducts = this.products;
+
+          // Extraindo categorias e subcategorias únicas
+          this.categories = [...new Set(this.products.map(product => product.category))];
+          this.subcategories = [...new Set(this.products.map(product => product.subcategory))];
         })
         .catch(error => {
           console.error("There was an error fetching the products!", error);
         });
+    },
+    filterProducts() {
+      this.filteredProducts = this.products;
+
+      if (this.selectedCategory) {
+        this.filteredProducts = this.filteredProducts.filter(product => product.category === this.selectedCategory);
+      }
+
+      if (this.selectedSubcategory) {
+        this.filteredProducts = this.filteredProducts.filter(product => product.subcategory === this.selectedSubcategory);
+      }
+
+      this.currentPage = 1; // Reseta para a primeira página após filtrar
     },
     addToCart(product) {
       const cartItem = this.cart.find(item => item.product.id === product.id);
@@ -170,6 +210,22 @@ export default {
 .product-list {
   display: flex;
   padding: 20px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filters label {
+  font-weight: bold;
+}
+
+.filters select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .cart-summary {

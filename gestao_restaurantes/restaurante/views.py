@@ -7,6 +7,8 @@ from .serializers import ProductSerializer, UserSerializer, CartItemSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import permission_classes
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view
+from collections import defaultdict
 
 User = get_user_model()
 
@@ -111,3 +113,28 @@ def user_cart(request):
         # Limpa o carrinho para o usuário autenticado
         CartItem.objects.filter(user=user, is_active=True).delete()
         return Response({'success': True, 'message': 'Carrinho limpo com sucesso!'}, status=status.HTTP_204_NO_CONTENT)
+    
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def categorized_products(request):
+    products = Product.objects.all()
+    data = defaultdict(lambda: defaultdict(list))
+
+    for product in products:
+        data[product.category][product.subcategory].append(ProductSerializer(product).data)
+
+    response = []
+    for category, subcats in data.items():
+        subcategory_list = []
+        for subcategory, products in subcats.items():
+            subcategory_list.append({
+                "subcategory": subcategory,
+                "products": products
+            })
+        response.append({
+            "category": category,
+            "subcategories": subcategory_list
+        })
+
+    return Response(response)

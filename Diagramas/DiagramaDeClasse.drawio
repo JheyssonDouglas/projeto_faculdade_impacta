@@ -1,0 +1,61 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.2 Chrome/134.0.6998.205 Electron/35.3.0 Safari/537.36" version="27.0.2">
+  <diagram name="Página-1" id="6JOhcNj-NHXfp3-5SAvM">
+    <mxGraphModel dx="1426" dy="827" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-3" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="40" y="40" width="180" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-1" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; id: BigAutoField&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; email: Email&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; nome: String&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&amp;nbsp; password: String&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;font style=&quot;&quot;&gt;&amp;nbsp; is_active:&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Boolean&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;font style=&quot;&quot;&gt;&amp;nbsp; is_staff:&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Boolean&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;font style=&quot;&quot;&gt;&amp;nbsp; is_superuser:&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Boolean&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;" vertex="1" parent="FX7M4Gws2i1eXAzxumuj-3">
+          <mxGeometry y="50" width="180" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-2" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;CustomUser&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="FX7M4Gws2i1eXAzxumuj-3">
+          <mxGeometry width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-10" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="300" y="270" width="180" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-7" value="&lt;div&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; id: AutoField&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; quantity: Int&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; is_active: Boolean&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; user: FK&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; product: FK&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;" vertex="1" parent="FX7M4Gws2i1eXAzxumuj-10">
+          <mxGeometry y="50" width="180" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-8" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;CartItem&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="FX7M4Gws2i1eXAzxumuj-10">
+          <mxGeometry width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-11" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="520" y="480" width="180" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-5" value="&lt;div&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; id: AutoField&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; name: String&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; description: Text&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; price: Decimal&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; image: Image&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; category: String&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&amp;nbsp; subcategory: String&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;" vertex="1" parent="FX7M4Gws2i1eXAzxumuj-11">
+          <mxGeometry y="50" width="180" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-6" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Product&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="FX7M4Gws2i1eXAzxumuj-11">
+          <mxGeometry width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-15" value="" style="strokeWidth=1;html=1;shape=mxgraph.flowchart.extract_or_measurement;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="375" y="250" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-21" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;top=0;left=0;fillColor=none;direction=north;" vertex="1" parent="1">
+          <mxGeometry x="250" y="160" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-24" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;top=0;left=0;fillColor=none;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="383" y="500" width="137" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="FX7M4Gws2i1eXAzxumuj-24" target="FX7M4Gws2i1eXAzxumuj-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-27" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;*&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="490" y="580" width="30" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-29" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;*&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="390" y="220" width="30" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-30" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;1&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="220" y="135" width="30" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FX7M4Gws2i1eXAzxumuj-32" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;1&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="384" y="500" width="30" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
