@@ -104,17 +104,25 @@ export default {
         });
     },
     filterProducts() {
-      this.filteredProducts = this.products;
+    // Filtrar produtos com base na categoria e subcategoria selecionadas
+    this.filteredProducts = this.products;
 
-      if (this.selectedCategory) {
-        this.filteredProducts = this.filteredProducts.filter(product => product.category === this.selectedCategory);
-      }
+    if (this.selectedCategory) {
+      this.filteredProducts = this.filteredProducts.filter(product => product.category === this.selectedCategory);
 
-      if (this.selectedSubcategory) {
-        this.filteredProducts = this.filteredProducts.filter(product => product.subcategory === this.selectedSubcategory);
-      }
+      // Atualizar subcategorias disponíveis com base na categoria selecionada
+      this.subcategories = [...new Set(this.filteredProducts.map(product => product.subcategory))];
+    } else {
+      // Restaurar todas as subcategorias se nenhuma categoria estiver selecionada
+      this.subcategories = [...new Set(this.products.map(product => product.subcategory))];
+    }
 
-      this.currentPage = 1; // Reseta para a primeira página após filtrar
+    if (this.selectedSubcategory) {
+      this.filteredProducts = this.filteredProducts.filter(product => product.subcategory === this.selectedSubcategory);
+
+    }
+
+    this.currentPage = 1; // Reseta para a primeira página após filtrar
     },
     addToCart(product) {
       const cartItem = this.cart.find(item => item.product.id === product.id);
@@ -195,6 +203,19 @@ export default {
     }
   },
   watch: {
+    selectedCategory(newCategory) {
+    if (!newCategory) {
+      // Se a categoria for desmarcada, restaura todas as subcategorias
+      this.subcategories = [...new Set(this.products.map(product => product.subcategory))];
+    } else {
+      // Atualiza as subcategorias com base na categoria selecionada
+      this.subcategories = [...new Set(this.products.filter(product => product.category === newCategory).map(product => product.subcategory))];
+    }
+    this.filterProducts();
+  },
+  selectedSubcategory() {
+    this.filterProducts();
+  },
     cart: {
       deep: true,
       handler() {
